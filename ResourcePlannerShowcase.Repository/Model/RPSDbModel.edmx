@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="rpsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EmployeeAvailability">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Week" />
+          </Key>
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Week" Type="int" Nullable="false" />
+          <Property Name="Days" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeProjects">
+          <Key>
+            <PropertyRef Name="EployeeId" />
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="EployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProjectId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ProjectActivities">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="ProjectId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Week" Type="int" Nullable="false" />
+          <Property Name="Work" Type="decimal" Precision="2" Scale="1" />
+          <Property Name="WeekUtilization" Type="decimal" Precision="2" Scale="1" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PrjectName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TeamMembers">
+          <Key>
+            <PropertyRef Name="TeamId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="TeamId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmployeeAvailability_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeAvailability" Type="Self.EmployeeAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeAvailability">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProjects_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="EployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectActivities_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="ProjectActivities" Type="Self.ProjectActivities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectActivities">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectActivities_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="ProjectActivities" Type="Self.ProjectActivities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectActivities">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMembers_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="TeamMembers" Type="Self.TeamMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamMembers">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamMembers_Teams">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="TeamMembers" Type="Self.TeamMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeamMembers">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamProjects_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="rpsModelStoreContainer">
+          <EntitySet Name="EmployeeProjects" EntityType="Self.EmployeeProjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectActivities" EntityType="Self.ProjectActivities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamMembers" EntityType="Self.TeamMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeAvailability" EntityType="Self.EmployeeAvailability" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmployeeAvailability].[EmployeeId] AS [EmployeeId], 
+    [EmployeeAvailability].[Week] AS [Week], 
+    [EmployeeAvailability].[Days] AS [Days]
+    FROM [dbo].[EmployeeAvailability] AS [EmployeeAvailability]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="Self.FK_EmployeeAvailability_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeAvailability" EntitySet="EmployeeAvailability" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProjects_Employees" Association="Self.FK_EmployeeProjects_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectActivities_Employees" Association="Self.FK_ProjectActivities_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="ProjectActivities" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectActivities_Projects" Association="Self.FK_ProjectActivities_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectActivities" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMembers_Employees" Association="Self.FK_TeamMembers_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="TeamMembers" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamMembers_Teams" Association="Self.FK_TeamMembers_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="TeamMembers" EntitySet="TeamMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamProjects_Projects" Association="Self.FK_TeamProjects_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="rpsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RpsEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="Employees" EntityType="rpsModel.Employee" />
+          <EntitySet Name="ProjectActivities" EntityType="rpsModel.ProjectActivity" />
+          <EntitySet Name="Projects" EntityType="rpsModel.Project" />
+          <EntitySet Name="Teams" EntityType="rpsModel.Team" />
+          <EntitySet Name="EmployeeAvailabilities" EntityType="rpsModel.EmployeeAvailability" />
+          <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="rpsModel.FK_EmployeeAvailability_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeAvailability" EntitySet="EmployeeAvailabilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectActivities_Employees" Association="rpsModel.FK_ProjectActivities_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectActivities_Projects" Association="rpsModel.FK_ProjectActivities_Projects">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeProjects" Association="rpsModel.EmployeeProjects">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="TeamMembers" Association="rpsModel.TeamMembers">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmployeeAvailabilities" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="Employee" ToRole="EmployeeAvailability" />
+          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="Employee" ToRole="ProjectActivity" />
+          <NavigationProperty Name="Projects" Relationship="rpsModel.EmployeeProjects" FromRole="Employee" ToRole="Project" />
+          <NavigationProperty Name="Teams" Relationship="rpsModel.TeamMembers" FromRole="Employee" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="ProjectActivity">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="ProjectId" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="Work" Type="Decimal" Precision="2" Scale="1" />
+          <Property Name="WeekUtilization" Type="Decimal" Precision="2" Scale="1" />
+          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="ProjectActivity" ToRole="Employee" />
+          <NavigationProperty Name="Project" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="ProjectActivity" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PrjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="Project" ToRole="ProjectActivity" />
+          <NavigationProperty Name="Employees" Relationship="rpsModel.EmployeeProjects" FromRole="Project" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="rpsModel.TeamMembers" FromRole="Team" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="EmployeeAvailability">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Week" />
+          </Key>
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="EmployeeAvailability" ToRole="Employee" />
+          <Property Name="Days" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_EmployeeAvailability_Employees">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="rpsModel.EmployeeAvailability" Role="EmployeeAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeAvailability">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectActivities_Employees">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="rpsModel.ProjectActivity" Role="ProjectActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectActivity">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectActivities_Projects">
+          <End Type="rpsModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="rpsModel.ProjectActivity" Role="ProjectActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectActivity">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeProjects">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="rpsModel.Project" Role="Project" Multiplicity="*" />
+        </Association>
+        <Association Name="TeamMembers">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="rpsModel.Team" Role="Team" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="rpsModelStoreContainer" CdmEntityContainer="RpsEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="rpsModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectActivities">
+            <EntityTypeMapping TypeName="rpsModel.ProjectActivity">
+              <MappingFragment StoreEntitySet="ProjectActivities">
+                <ScalarProperty Name="WeekUtilization" ColumnName="WeekUtilization" />
+                <ScalarProperty Name="Work" ColumnName="Work" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="rpsModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="PrjectName" ColumnName="PrjectName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="rpsModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeAvailabilities">
+            <EntityTypeMapping TypeName="rpsModel.EmployeeAvailability">
+              <MappingFragment StoreEntitySet="EmployeeAvailability">
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EmployeeProjects" TypeName="rpsModel.EmployeeProjects" StoreEntitySet="EmployeeProjects">
+            <EndProperty Name="Project">
+              <ScalarProperty Name="Id" ColumnName="ProjectId" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EployeeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TeamMembers" TypeName="rpsModel.TeamMembers" StoreEntitySet="TeamMembers">
+            <EndProperty Name="Team">
+              <ScalarProperty Name="Id" ColumnName="TeamId" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

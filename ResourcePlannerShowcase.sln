@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FC71E3B8-771C-442B-BD58-6DF734D739A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ECAACC9A-E819-471D-A02B-C9B512E77FCB}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ResourcePlannerShowcase.Angular", "src\ResourcePlannerShowcase.Angular\ResourcePlannerShowcase.Angular.xproj", "{FD94D980-2059-4F5F-8097-397E241780E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcePlannerShowcase.Repository", "ResourcePlannerShowcase.Repository\ResourcePlannerShowcase.Repository.csproj", "{DE69C717-2BFE-4555-B6B5-A667C9614F08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcePlannerShowcase.Api", "ResourcePlannerShowcase.Api\ResourcePlannerShowcase.Api.csproj", "{448CCA90-18DB-4826-A9C6-59003F56CA0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD94D980-2059-4F5F-8097-397E241780E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD94D980-2059-4F5F-8097-397E241780E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD94D980-2059-4F5F-8097-397E241780E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD94D980-2059-4F5F-8097-397E241780E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE69C717-2BFE-4555-B6B5-A667C9614F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE69C717-2BFE-4555-B6B5-A667C9614F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE69C717-2BFE-4555-B6B5-A667C9614F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE69C717-2BFE-4555-B6B5-A667C9614F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448CCA90-18DB-4826-A9C6-59003F56CA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448CCA90-18DB-4826-A9C6-59003F56CA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448CCA90-18DB-4826-A9C6-59003F56CA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448CCA90-18DB-4826-A9C6-59003F56CA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD94D980-2059-4F5F-8097-397E241780E3} = {FC71E3B8-771C-442B-BD58-6DF734D739A7}
+		{448CCA90-18DB-4826-A9C6-59003F56CA0E} = {FC71E3B8-771C-442B-BD58-6DF734D739A7}
+	EndGlobalSection
+EndGlobal

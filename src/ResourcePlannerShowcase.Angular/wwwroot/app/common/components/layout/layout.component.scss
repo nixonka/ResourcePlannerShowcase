@@ -1,0 +1,44 @@
+﻿$display-width: 100%;
+$sidebar-width: 235px;
+
+$header-height: 50px;
+$footer-height: 25px;
+
+
+
+.header-wrapper {
+    width: $display-width;
+    height: $header-height;
+}
+
+.content-wrapper {
+    width: $display-width;
+}
+
+.content-wrapper div {
+    margin: 0;
+    border: none;
+    /*width: 30%;*/
+    /*float:left;*/
+
+}
+
+.content-wrapper .body-content .row {
+    padding: 0 15px;
+    width: $display-width;
+}
+
+.footer-wrapper {
+    width: $display-width;
+    height: $footer-height;
+}
+
+
+/*.sidebar-wrapper {
+    width: $sidebar-width;
+    float: left;
+
+}*/
+
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="29d84ede6f984bea89e38b87cf1bdd39" Name="Diagram1">
+        <EntityTypeShape EntityType="rpsModel.Employee" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="rpsModel.ProjectActivity" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="rpsModel.Project" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="rpsModel.Team" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="rpsModel.EmployeeAvailability" Width="1.5" PointX="3" PointY="8.375" />
+        <AssociationConnector Association="rpsModel.FK_EmployeeAvailability_Employees" />
+        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Employees" />
+        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Projects" />
+        <AssociationConnector Association="rpsModel.EmployeeProjects" />
+        <AssociationConnector Association="rpsModel.TeamMembers" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

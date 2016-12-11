@@ -1,0 +1,19 @@
+﻿<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="index.html">Home</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li *ngFor="let item of breadcrumbItems; let i = index">
+            <span>{{ item }}</span>
+            <i class="fa fa-circle" *ngIf="i != breadcrumbItems.length-1"></i>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+
+    </div>
+</div>
+<h1 class="page-title">
+    {{ title }}
+    <small>{{ subTitle }}</small>
+</h1>

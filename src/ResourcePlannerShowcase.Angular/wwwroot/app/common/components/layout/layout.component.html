@@ -1,0 +1,17 @@
+﻿
+
+<div class="content-wrapper" [style.height]="layoutService.contentHeight+'px'">
+
+    <div class="body-content" [style.height]="layoutService.contentHeight+'px'">
+        <pagebar [breadcrumbItems]="['Reports', 'Teams']" [title]="'Reports'" [subTitle]="'Teams'"></pagebar>
+        <div class="ps row">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div [style.height]="layoutService.contentHeight+'px'" [style.width]="layoutService.propertiesbarWidth+'px'">
+
+    </div>
+
+</div>
+
+<div modalAnchor></div>
