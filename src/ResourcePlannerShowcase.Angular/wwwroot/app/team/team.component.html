@@ -1,9 +1,9 @@
-﻿<ng-select [options]="options"
+﻿<!--<ng-select [options]="options"
                multiple="true"
                placeholder="Select a team"
                [allowClear]="true"
                theme="default">
-</ng-select>
+</ng-select>-->
 
 <table class="table table-striped">
     <thead>
@@ -47,14 +47,16 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of ts.teams[2].employees">
+        <tr *ngFor="let item of ts.employees">
             <td>{{item.name}}</td>
-            <!--<td *ngFor="let month of item.monthlyUtilization">%</td>-->
+            <td *ngFor="let month of item.monthlyUtilization">%</td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="4"></td>
+            <td colspan="13"></td>
         </tr>
     </tfoot>
 </table>
+
+<button (click)="test()"></button>

@@ -16,14 +16,11 @@ var forms_1 = require('@angular/forms');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var angular2_select_1 = require('angular2-select');
 var app_component_1 = require('./app.component');
-var footer_component_1 = require('./common/components/footer/footer.component');
 var global_service_1 = require('./common/services/global.service');
 var layout_component_1 = require('./common/components/layout/layout.component');
 var layout_service_1 = require('./common/components/layout/layout.service');
 var modal_component_1 = require('./common/components/modal/modal.component');
 var pagebar_component_1 = require('./common/components/pagebar/pagebar.component');
-var sidebar_menu_component_1 = require('./common/components/sidebar-menu/sidebar-menu.component');
-var top_menu_component_1 = require('./common/components/top-menu/top-menu.component');
 var team_component_1 = require('./team/team.component');
 var modal_anchor_directive_1 = require('./common/directives/modal-anchor/modal-anchor.directive');
 var modal_anchor_service_1 = require('./common/directives/modal-anchor/modal-anchor.service');
@@ -46,12 +43,9 @@ var AppModule = (function () {
             providers: [global_service_1.GlobalService, layout_service_1.LayoutService, modal_anchor_service_1.ModalAnchorService],
             declarations: [
                 app_component_1.AppComponent,
-                footer_component_1.FooterComponent,
                 layout_component_1.LayoutComponent,
                 pagebar_component_1.PagebarComponent,
-                sidebar_menu_component_1.SidebarMenuComponent,
                 team_component_1.TeamComponent,
-                top_menu_component_1.TopMenuComponent,
                 modal_anchor_directive_1.ModalAnchorDirective,
                 modal_component_1.ModalComponent
             ],

@@ -11,6 +11,7 @@ import { GlobalService } from '../common/services/global.service';
 export class TeamService implements OnInit {
 
     teams: Team[];
+    employees: Employee[];
     options: any[];
 
     constructor(private http: Http, private gs: GlobalService) {
@@ -23,6 +24,7 @@ export class TeamService implements OnInit {
     }
 
     getTeams(): void {
+        //http get
         this.http.get(this.gs.getApiUrl('data', 'getteams'))
             .map((response: Response) => <Team[]>response.json())
             .do(data => console.log("All: " + JSON.stringify(data)))
@@ -37,7 +39,7 @@ export class TeamService implements OnInit {
             .map((response: Response) => <Employee[]>response.json())
             .do(data => console.log("All: " + JSON.stringify(data)))
             .catch(this.handleError)
-            .subscribe(employees => this.teams[2].employees = employees);
+            .subscribe(employees => this.employees = employees);
     }
 
     handleError(error: Response) {

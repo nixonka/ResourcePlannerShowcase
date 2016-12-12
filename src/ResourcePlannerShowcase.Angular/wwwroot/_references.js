@@ -14,7 +14,6 @@
 /// <reference path="app/common/models/rps.classes.js" />
 /// <reference path="app/common/models/rps.interfaces.js" />
 /// <reference path="app/common/services/global.service.js" />
-/// <reference path="app/common/services/initialization.service.js" />
 /// <reference path="app/main.js" />
 /// <reference path="app/team/team.component.js" />
 /// <reference path="app/team/team.service.js" />

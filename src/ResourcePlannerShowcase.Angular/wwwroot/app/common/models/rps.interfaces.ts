@@ -9,38 +9,10 @@ export interface IEmployee {
 }
 
 export interface IMonthlyUtilization {
-    month: string;
+    month: number;
     utilization: number;
 }
 
-export interface IContentModel {
-    id: string;
-    name: string;
-    description: string;
-    status: ContentModelStatus;
-    contentFields: IContentField[];
-}
-
-export interface IContentField {
-    key: string;
-    name: string;
-    description: string;
-    type: IFieldType;
-
-}
-
-export interface IFieldType {
-    type: string;
-    length: number;
-    icon: string;
-    descriptions: string[];
-}
-
-export interface IContent {
-    id: string;
-    contentModelId: string;
-    contentFieldsValues: any;
-}
 
 export interface IModalComponent {
     close: EventEmitter<{}>;

@@ -24,26 +24,23 @@ var TeamService = (function () {
     };
     TeamService.prototype.getTeams = function () {
         var _this = this;
+        //http get
         this.http.get(this.gs.getApiUrl('data', 'getteams'))
             .map(function (response) { return response.json(); })
             .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
             .catch(this.handleError)
             .subscribe(function (teams) { return _this.teams = teams; });
     };
+    //hard coded - loading employees just for team alicic
+    //later will be extended with url parameter so it would load employees just for team
     TeamService.prototype.getEmployees = function () {
         var _this = this;
         this.http.get(this.gs.getApiUrl('data', 'getemployees'))
             .map(function (response) { return response.json(); })
             .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
             .catch(this.handleError)
-            .subscribe(function (employees) { return _this.teams[2].employees = employees; });
+            .subscribe(function (employees) { return _this.employees = employees; });
     };
-    //getTeams(): Observable<Team[]> {
-    //    return this.http.get(this.gs.getApiUrl('data', 'getteams'))
-    //        .map((response: Response) => <Team[]>response.json())
-    //        .do(data => console.log("All: " + JSON.stringify(data)))
-    //        .catch(this.handleError);
-    //}
     TeamService.prototype.handleError = function (error) {
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');

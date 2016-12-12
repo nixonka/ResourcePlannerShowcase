@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 //import {  } from './common/models/';
 //import {  } from './common/services/';
-//import { GlobalService } from './common/services/global.service';
+var global_service_1 = require('./common/services/global.service');
 //enableProdMode();
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(gs) {
+        this.gs = gs;
     }
     AppComponent.prototype.ngOnInit = function () {
+        this.gs.getTeams();
     };
     AppComponent = __decorate([
         core_1.Component({
@@ -24,7 +26,7 @@ var AppComponent = (function () {
             templateUrl: 'app/app.component.html',
             providers: []
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [global_service_1.GlobalService])
     ], AppComponent);
     return AppComponent;
 }());

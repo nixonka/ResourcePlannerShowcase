@@ -103,6 +103,7 @@
     <Content Include="Model\RPSDbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RPSDbModel.edmx</DependentUpon>
+      <LastGenOutput>RPSDbModel.Context1.cs</LastGenOutput>
     </Content>
     <Content Include="Model\RPSDbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

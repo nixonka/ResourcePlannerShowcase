@@ -3,7 +3,7 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
 //import {  } from './common/models/';
 //import {  } from './common/services/';
-//import { GlobalService } from './common/services/global.service';
+import { GlobalService } from './common/services/global.service';
 
 //enableProdMode();
 
@@ -15,11 +15,11 @@ import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
 export class AppComponent implements OnInit {
     errorMessage: any;
 
-    constructor(/*private _globalService: GlobalService*/) {
+    constructor(private gs: GlobalService) {
 
     }
 
     ngOnInit(): void {
-
+        this.gs.getTeams();
     }
 }

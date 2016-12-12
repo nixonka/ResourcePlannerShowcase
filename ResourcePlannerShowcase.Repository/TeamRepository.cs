@@ -13,7 +13,8 @@ namespace ResourcePlannerShowcase.Repository
     public class TeamRepository : ITeamRepository
     {
         /// <summary>
-        /// 
+        /// This should be instantiate in project where we use TeamRepository and pass as a prameter
+        /// It is done like this just to save some time
         /// </summary>
         private RpsEntities db = new RpsEntities();
 
@@ -23,7 +24,7 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns>Returns list of teams.</returns>
         public IEnumerable<Team> GetTeams()
         {
-            return db.Teams.ToList();
+            return db.Teams.Include("Employees").ToList();
         }
 
         /// <summary>
