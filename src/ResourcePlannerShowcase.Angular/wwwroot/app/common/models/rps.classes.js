@@ -26,4 +26,16 @@ var MonthlyUtilization = (function () {
     return MonthlyUtilization;
 }());
 exports.MonthlyUtilization = MonthlyUtilization;
+var ProjectActivities = (function () {
+    function ProjectActivities() {
+    }
+    return ProjectActivities;
+}());
+exports.ProjectActivities = ProjectActivities;
+var EmployeeAvailabilities = (function () {
+    function EmployeeAvailabilities() {
+    }
+    return EmployeeAvailabilities;
+}());
+exports.EmployeeAvailabilities = EmployeeAvailabilities;
 //# sourceMappingURL=rps.classes.js.map

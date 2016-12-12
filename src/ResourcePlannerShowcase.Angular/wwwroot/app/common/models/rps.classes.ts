@@ -17,7 +17,10 @@ export class Team {
 export class Employee implements IEmployee {
     id: string;
     name: string;
-    monthlyUtilization: IMonthlyUtilization[];
+    monthlyUtilization: MonthlyUtilization[];
+    projectActivities: ProjectActivities[];
+    employeeAvailabilities: EmployeeAvailabilities[];
+
     constructor() {
         this.monthlyUtilization = [];
     }
@@ -28,5 +31,13 @@ export class MonthlyUtilization implements IMonthlyUtilization {
     utilization: number;
 }
 
+export class ProjectActivities {
+    week: number;
+    work: number;
+}
 
+export class EmployeeAvailabilities {
+    week: number;
+    available: number;
+} 
 

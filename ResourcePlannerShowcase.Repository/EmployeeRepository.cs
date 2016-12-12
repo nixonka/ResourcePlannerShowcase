@@ -17,10 +17,9 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns>list of employees</returns>
         public IEnumerable<Employee> GetEmployees()
         {
-            return db.Employees.Include("EmployeeAvailabilities").ToList();
-                
-                
-                //.ForEach(e => e.EmployeeAvailabilities = db.EmployeeAvailabilities.Where(ea => ea.EmployeeId == e.Id ).ToList());
+            return db.Employees
+                .Include("EmployeeAvailabilities")
+                .Include("ProjectActivities").ToList();
         }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns>list of employees</returns>
         public IEnumerable<Employee> GetEmployeesByTeam(Guid teamID)
         {
-            if(teamID == null)
+            if (teamID == null)
                 throw new ArgumentNullException("TeamID cannot be null.");
 
             return db.Teams.Where(t => t.Id == teamID).FirstOrDefault().Employees.ToList();

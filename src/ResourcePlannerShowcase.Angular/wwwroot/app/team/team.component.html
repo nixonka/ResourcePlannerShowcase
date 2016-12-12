@@ -1,9 +1,11 @@
-﻿<!--<ng-select [options]="options"
-               multiple="true"
-               placeholder="Select a team"
-               [allowClear]="true"
-               theme="default">
-</ng-select>-->
+﻿<ng-select [options]="options"
+                multiple="true"
+                placeholder="Select a team"
+                [allowClear]="true"
+                theme="default"
+                (selected)="onSelected($event)"
+                (deselected)="onDeselected($event)">>
+</ng-select>
 
 <table class="table table-striped">
     <thead>
@@ -19,6 +21,9 @@
             </th>
             <th>
                 Mar
+            </th>
+            <th>
+                Apr
             </th>
             <th>
                 Mai
@@ -49,7 +54,7 @@
     <tbody>
         <tr *ngFor="let item of ts.employees">
             <td>{{item.name}}</td>
-            <td *ngFor="let month of item.monthlyUtilization">%</td>
+            <td *ngFor="let month of item.monthlyUtilization" (click)='openModal()'>{{ month.utilization | percent:'.2' }}</td>
         </tr>
     </tbody>
     <tfoot>

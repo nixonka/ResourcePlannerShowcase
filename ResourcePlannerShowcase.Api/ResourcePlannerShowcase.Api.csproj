@@ -223,6 +223,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ResourcePlannerShowcase.Helpers\ResourcePlannerShowcase.Helpers.csproj">
+      <Project>{1E5436CC-B64D-4940-878E-E18D06037B13}</Project>
+      <Name>ResourcePlannerShowcase.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ResourcePlannerShowcase.Repository\ResourcePlannerShowcase.Repository.csproj">
       <Project>{de69c717-2bfe-4555-b6b5-a667c9614f08}</Project>
       <Name>ResourcePlannerShowcase.Repository</Name>

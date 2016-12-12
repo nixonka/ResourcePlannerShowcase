@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 require('rxjs/Rx');
 var Observable_1 = require('rxjs/Observable');
 var http_1 = require('@angular/http');
+var rps_classes_1 = require('../common/models/rps.classes');
 var global_service_1 = require('../common/services/global.service');
 var TeamService = (function () {
     function TeamService(http, gs) {
@@ -19,6 +20,8 @@ var TeamService = (function () {
         this.gs = gs;
         this.teams = [];
         this.options = [];
+        this.weeks = [];
+        this.getWeeks(2016);
     }
     TeamService.prototype.ngOnInit = function () {
     };
@@ -39,11 +42,70 @@ var TeamService = (function () {
             .map(function (response) { return response.json(); })
             .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
             .catch(this.handleError)
-            .subscribe(function (employees) { return _this.employees = employees; });
+            .subscribe(function (employees) { return _this.calculateMonthlyUtilization(employees); });
+    };
+    TeamService.prototype.getWeeks = function (year) {
+        var _this = this;
+        for (var i = 1; i <= 12; i++) {
+            this.http.get((this.gs.getApiUrl('data', 'weeks') + ("?month=" + i + "&year=" + year)))
+                .map(function (response) { return response.json(); })
+                .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
+                .catch(this.handleError)
+                .subscribe(function (weeks) { return _this.weeks.push(weeks); });
+        }
     };
     TeamService.prototype.handleError = function (error) {
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');
+    };
+    TeamService.prototype.calculateMonthlyUtilization = function (employees) {
+        this.employees = employees;
+        for (var _i = 0, _a = this.employees; _i < _a.length; _i++) {
+            var emplooyee = _a[_i];
+            emplooyee.monthlyUtilization = [];
+            for (var i = 1; i <= 12; i++) {
+                var utilization = new rps_classes_1.MonthlyUtilization();
+                utilization.month = i;
+                utilization.utilization = this.calculateUtilitizationForEmployee(emplooyee.employeeAvailabilities, emplooyee.projectActivities, this.weeks[i], i);
+                emplooyee.monthlyUtilization.push(utilization);
+            }
+        }
+    };
+    TeamService.prototype.calculateUtilitizationForEmployee = function (employeeAvailabilities, projectActivities, weeks, month) {
+        var monthlyHours = 0;
+        var weeksToProcess = 0;
+        weeksToProcess = getWeeksInMonth(month);
+        for (var _i = 0, employeeAvailabilities_1 = employeeAvailabilities; _i < employeeAvailabilities_1.length; _i++) {
+            var week = employeeAvailabilities_1[_i];
+            if (week.week >= weeksToProcess && week.week <= weeks) {
+                monthlyHours += week.available;
+            }
+        }
+        var monthlyWork = 0;
+        for (var _a = 0, projectActivities_1 = projectActivities; _a < projectActivities_1.length; _a++) {
+            var activity = projectActivities_1[_a];
+            if (activity.week >= weeksToProcess && activity.week <= weeks) {
+                monthlyWork += activity.work;
+            }
+        }
+        if (monthlyHours != 0 && monthlyWork != 0) {
+            return monthlyWork / monthlyHours;
+        }
+        else {
+            return 0;
+        }
+    };
+    TeamService.prototype.getWeeksInMonth = function (month) {
+        if (month == 1)
+            return 1;
+        switch (month) {
+            case 1:
+                return 1;
+                break;
+            case 2:
+                return;
+                break;
+        }
     };
     TeamService = __decorate([
         core_1.Injectable(), 

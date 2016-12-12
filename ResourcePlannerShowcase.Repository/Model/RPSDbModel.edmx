@@ -14,7 +14,9 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           </Key>
           <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Week" Type="int" Nullable="false" />
-          <Property Name="Days" Type="int" />
+          <Property Name="Available" Type="int" />
+          <Property Name="Worked" Type="int" />
+          <Property Name="WeekUtilization" Type="decimal" Precision="4" Scale="1" />
         </EntityType>
         <EntityType Name="EmployeeProjects">
           <Key>
@@ -31,16 +33,18 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProjectActivities">
           <Key>
             <PropertyRef Name="ProjectId" />
             <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Week" />
           </Key>
           <Property Name="ProjectId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Week" Type="int" Nullable="false" />
           <Property Name="Work" Type="decimal" Precision="2" Scale="1" />
-          <Property Name="WeekUtilization" Type="decimal" Precision="2" Scale="1" />
         </EntityType>
         <EntityType Name="Projects">
           <Key>
@@ -151,7 +155,6 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
         <EntityContainer Name="rpsModelStoreContainer">
           <EntitySet Name="EmployeeProjects" EntityType="Self.EmployeeProjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProjectActivities" EntityType="Self.ProjectActivities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamMembers" EntityType="Self.TeamMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
@@ -159,8 +162,18 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
             <DefiningQuery>SELECT 
     [EmployeeAvailability].[EmployeeId] AS [EmployeeId], 
     [EmployeeAvailability].[Week] AS [Week], 
-    [EmployeeAvailability].[Days] AS [Days]
+    [EmployeeAvailability].[Available] AS [Available], 
+    [EmployeeAvailability].[Worked] AS [Worked], 
+    [EmployeeAvailability].[WeekUtilization] AS [WeekUtilization]
     FROM [dbo].[EmployeeAvailability] AS [EmployeeAvailability]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProjectActivities" EntityType="Self.ProjectActivities" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProjectActivities].[ProjectId] AS [ProjectId], 
+    [ProjectActivities].[EmployeeId] AS [EmployeeId], 
+    [ProjectActivities].[Week] AS [Week], 
+    [ProjectActivities].[Work] AS [Work]
+    FROM [dbo].[ProjectActivities] AS [ProjectActivities]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="Self.FK_EmployeeAvailability_Employees">
             <End Role="Employees" EntitySet="Employees" />
@@ -197,10 +210,10 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
       <Schema Namespace="rpsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="RpsEntities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Employees" EntityType="rpsModel.Employee" />
-          <EntitySet Name="ProjectActivities" EntityType="rpsModel.ProjectActivity" />
           <EntitySet Name="Projects" EntityType="rpsModel.Project" />
           <EntitySet Name="Teams" EntityType="rpsModel.Team" />
           <EntitySet Name="EmployeeAvailabilities" EntityType="rpsModel.EmployeeAvailability" />
+          <EntitySet Name="ProjectActivities" EntityType="rpsModel.ProjectActivity" />
           <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="rpsModel.FK_EmployeeAvailability_Employees">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeAvailability" EntitySet="EmployeeAvailabilities" />
@@ -233,19 +246,6 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           <NavigationProperty Name="Projects" Relationship="rpsModel.EmployeeProjects" FromRole="Employee" ToRole="Project" />
           <NavigationProperty Name="Teams" Relationship="rpsModel.TeamMembers" FromRole="Employee" ToRole="Team" />
         </EntityType>
-        <EntityType Name="ProjectActivity">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="ProjectId" Type="Guid" Nullable="false" />
-          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
-          <Property Name="Week" Type="Int32" Nullable="false" />
-          <Property Name="Work" Type="Decimal" Precision="2" Scale="1" />
-          <Property Name="WeekUtilization" Type="Decimal" Precision="2" Scale="1" />
-          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="ProjectActivity" ToRole="Employee" />
-          <NavigationProperty Name="Project" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="ProjectActivity" ToRole="Project" />
-        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="Id" />
@@ -270,8 +270,23 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           </Key>
           <Property Name="EmployeeId" Type="Guid" Nullable="false" />
           <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="Available" Type="Int32" />
+          <Property Name="Worked" Type="Int32" />
+          <Property Name="WeekUtilization" Type="Decimal" Precision="4" Scale="1" />
           <NavigationProperty Name="Employee" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="EmployeeAvailability" ToRole="Employee" />
-          <Property Name="Days" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ProjectActivity">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Week" />
+          </Key>
+          <Property Name="ProjectId" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="Work" Type="Decimal" Precision="2" Scale="1" />
+          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="ProjectActivity" ToRole="Employee" />
+          <NavigationProperty Name="Project" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="ProjectActivity" ToRole="Project" />
         </EntityType>
         <Association Name="FK_EmployeeAvailability_Employees">
           <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
@@ -331,17 +346,6 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProjectActivities">
-            <EntityTypeMapping TypeName="rpsModel.ProjectActivity">
-              <MappingFragment StoreEntitySet="ProjectActivities">
-                <ScalarProperty Name="WeekUtilization" ColumnName="WeekUtilization" />
-                <ScalarProperty Name="Work" ColumnName="Work" />
-                <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="rpsModel.Project">
               <MappingFragment StoreEntitySet="Projects">
@@ -361,9 +365,21 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           <EntitySetMapping Name="EmployeeAvailabilities">
             <EntityTypeMapping TypeName="rpsModel.EmployeeAvailability">
               <MappingFragment StoreEntitySet="EmployeeAvailability">
-                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="WeekUtilization" ColumnName="WeekUtilization" />
+                <ScalarProperty Name="Worked" ColumnName="Worked" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
                 <ScalarProperty Name="Week" ColumnName="Week" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectActivities">
+            <EntityTypeMapping TypeName="rpsModel.ProjectActivity">
+              <MappingFragment StoreEntitySet="ProjectActivities">
+                <ScalarProperty Name="Work" ColumnName="Work" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

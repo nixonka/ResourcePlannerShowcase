@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { } from '../common/models/rps.interfaces';
-import { Team, Employee } from '../common/models/rps.classes';
+import { Team, Employee, MonthlyUtilization, EmployeeAvailabilities, ProjectActivities } from '../common/models/rps.classes';
 import { GlobalService } from '../common/services/global.service';
 
 @Injectable()
@@ -13,10 +13,14 @@ export class TeamService implements OnInit {
     teams: Team[];
     employees: Employee[];
     options: any[];
+    weeks: number[];
 
     constructor(private http: Http, private gs: GlobalService) {
         this.teams = [];
         this.options = [];
+        this.weeks = [];
+
+        this.getWeeks(2016);
     }
 
     ngOnInit(): void {
@@ -39,11 +43,83 @@ export class TeamService implements OnInit {
             .map((response: Response) => <Employee[]>response.json())
             .do(data => console.log("All: " + JSON.stringify(data)))
             .catch(this.handleError)
-            .subscribe(employees => this.employees = employees);
+            .subscribe(employees => this.calculateMonthlyUtilization(employees));
+    }
+
+    getWeeks(year: number): void {
+        for (var i = 1; i <= 12; i++) {
+            this.http.get((this.gs.getApiUrl('data', 'weeks') + `?month=${i}&year=${year}`))
+                .map((response: Response) => <number>response.json())
+                .do(data => console.log("All: " + JSON.stringify(data)))
+                .catch(this.handleError)
+                .subscribe(weeks => this.weeks.push(weeks));
+        }
     }
 
     handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
+    }
+
+    calculateMonthlyUtilization(employees: Employee[]) {
+        this.employees = employees;
+        for (let emplooyee of this.employees) {
+            emplooyee.monthlyUtilization = [];
+            for (var i = 1; i <= 12; i++) {
+                let utilization = new MonthlyUtilization();
+
+                utilization.month = i;
+                utilization.utilization = this.calculateUtilitizationForEmployee(
+                    emplooyee.employeeAvailabilities,
+                    emplooyee.projectActivities,
+                    this.weeks[i],
+                    i
+                );
+
+                emplooyee.monthlyUtilization.push(utilization);
+            }
+        }
+    }
+
+    calculateUtilitizationForEmployee(employeeAvailabilities: EmployeeAvailabilities[], projectActivities: ProjectActivities[], weeks: number, month: number): number {
+        var monthlyHours: number = 0;
+        var weeksToProcess: number = 0;
+
+        weeksToProcess = getWeeksInMonth(month);
+
+        for (let week of employeeAvailabilities) {
+            if (week.week >= weeksToProcess && week.week <= weeks) {
+                monthlyHours += week.available;
+            }
+        }
+
+        var monthlyWork: number = 0;
+        for (let activity of projectActivities) {
+            if (activity.week >= weeksToProcess && activity.week <= weeks) {
+                monthlyWork += activity.work;
+            }
+        }
+
+        if (monthlyHours != 0 && monthlyWork != 0) {
+            return monthlyWork / monthlyHours;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    getWeeksInMonth(month: number) {
+        if (month == 1)
+            return 1;
+
+        switch (month) {
+            case 1:
+                return 1;
+                break;
+            case 2:
+                return;
+                break;
+        }
+
     }
 }

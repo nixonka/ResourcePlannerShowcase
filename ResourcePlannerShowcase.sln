@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcePlannerShowcase.Api
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcePlannerShowcase.Helpers", "ResourcePlannerShowcase.Helpers\ResourcePlannerShowcase.Helpers.csproj", "{1E5436CC-B64D-4940-878E-E18D06037B13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcePlannerShowcase.HelpersTests", "ResourcePlannerShowcase.HelpersTests\ResourcePlannerShowcase.HelpersTests.csproj", "{266EC6F9-3A99-4BB3-8DB4-65DB3E89AFC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{1E5436CC-B64D-4940-878E-E18D06037B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E5436CC-B64D-4940-878E-E18D06037B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E5436CC-B64D-4940-878E-E18D06037B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266EC6F9-3A99-4BB3-8DB4-65DB3E89AFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266EC6F9-3A99-4BB3-8DB4-65DB3E89AFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266EC6F9-3A99-4BB3-8DB4-65DB3E89AFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266EC6F9-3A99-4BB3-8DB4-65DB3E89AFC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

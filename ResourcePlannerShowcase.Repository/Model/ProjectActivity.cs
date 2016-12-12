@@ -18,7 +18,6 @@ namespace ResourcePlannerShowcase.Repository.Model
         public System.Guid EmployeeId { get; set; }
         public int Week { get; set; }
         public Nullable<decimal> Work { get; set; }
-        public Nullable<decimal> WeekUtilization { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Project Project { get; set; }
