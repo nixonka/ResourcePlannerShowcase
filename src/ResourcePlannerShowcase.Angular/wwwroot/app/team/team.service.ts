@@ -85,7 +85,7 @@ export class TeamService implements OnInit {
         var monthlyHours: number = 0;
         var weeksToProcess: number = 0;
 
-        weeksToProcess = getWeeksInMonth(month);
+        weeksToProcess = this.getWeeksInMonth(month);
 
         for (let week of employeeAvailabilities) {
             if (week.week >= weeksToProcess && week.week <= weeks) {
@@ -111,15 +111,18 @@ export class TeamService implements OnInit {
     getWeeksInMonth(month: number) {
         if (month == 1)
             return 1;
+        else
+            return this.calculateWeeksToMonth(month);
+    }
 
-        switch (month) {
-            case 1:
-                return 1;
-                break;
-            case 2:
-                return;
-                break;
+
+    calculateWeeksToMonth(month: number) {
+        let weeks = 1;
+        for (var i = 1; i <= 12; i++) {
+            if (i < month) {
+                weeks += this.weeks[i];
+            }
         }
-
+        return weeks;
     }
 }

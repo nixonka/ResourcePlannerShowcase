@@ -74,7 +74,7 @@ var TeamService = (function () {
     TeamService.prototype.calculateUtilitizationForEmployee = function (employeeAvailabilities, projectActivities, weeks, month) {
         var monthlyHours = 0;
         var weeksToProcess = 0;
-        weeksToProcess = getWeeksInMonth(month);
+        weeksToProcess = this.getWeeksInMonth(month);
         for (var _i = 0, employeeAvailabilities_1 = employeeAvailabilities; _i < employeeAvailabilities_1.length; _i++) {
             var week = employeeAvailabilities_1[_i];
             if (week.week >= weeksToProcess && week.week <= weeks) {
@@ -98,14 +98,17 @@ var TeamService = (function () {
     TeamService.prototype.getWeeksInMonth = function (month) {
         if (month == 1)
             return 1;
-        switch (month) {
-            case 1:
-                return 1;
-                break;
-            case 2:
-                return;
-                break;
+        else
+            return this.calculateWeeksToMonth(month);
+    };
+    TeamService.prototype.calculateWeeksToMonth = function (month) {
+        var weeks = 1;
+        for (var i = 1; i <= 12; i++) {
+            if (i < month) {
+                weeks += this.weeks[i];
+            }
         }
+        return weeks;
     };
     TeamService = __decorate([
         core_1.Injectable(), 
