@@ -20,7 +20,8 @@ var TeamService = (function () {
         this.gs = gs;
         this.teams = [];
         this.options = [];
-        this.weeks = [];
+        this.weeksPerMonth = [];
+        this.mondaysOfMonth = [];
         this.getWeeks(2016);
     }
     TeamService.prototype.ngOnInit = function () {
@@ -51,8 +52,16 @@ var TeamService = (function () {
                 .map(function (response) { return response.json(); })
                 .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
                 .catch(this.handleError)
-                .subscribe(function (weeks) { return _this.weeks.push(weeks); });
+                .subscribe(function (weeks) { return _this.weeksPerMonth.push(weeks); });
         }
+    };
+    TeamService.prototype.getMondays = function (year, month) {
+        var _this = this;
+        this.http.get((this.gs.getApiUrl('data', 'mondays') + ("?month=" + month + "&year=" + year)))
+            .map(function (response) { return response.json(); })
+            .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
+            .catch(this.handleError)
+            .subscribe(function (mondays) { return _this.mondaysOfMonth = mondays; });
     };
     TeamService.prototype.handleError = function (error) {
         console.error(error);
@@ -66,7 +75,7 @@ var TeamService = (function () {
             for (var i = 1; i <= 12; i++) {
                 var utilization = new rps_classes_1.MonthlyUtilization();
                 utilization.month = i;
-                utilization.utilization = this.calculateUtilitizationForEmployee(emplooyee.employeeAvailabilities, emplooyee.projectActivities, this.weeks[i], i);
+                utilization.utilization = this.calculateUtilitizationForEmployee(emplooyee.employeeAvailabilities, emplooyee.projectActivities, this.weeksPerMonth[i], i);
                 emplooyee.monthlyUtilization.push(utilization);
             }
         }
@@ -105,7 +114,7 @@ var TeamService = (function () {
         var weeks = 1;
         for (var i = 1; i <= 12; i++) {
             if (i < month) {
-                weeks += this.weeks[i];
+                weeks += this.weeksPerMonth[i];
             }
         }
         return weeks;

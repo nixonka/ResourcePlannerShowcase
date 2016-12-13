@@ -4,7 +4,8 @@ import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { SelectModule } from  'angular2-select';
+
+import {  } from  '';
 
 import { AppComponent } from './app.component';
 
@@ -27,7 +28,7 @@ import { Routing } from './app.routing';
         FormsModule,
         ReactiveFormsModule,
         Ng2BootstrapModule,
-        SelectModule
+
     ],
     providers: [GlobalService, LayoutService, ModalAnchorService],
     declarations: [

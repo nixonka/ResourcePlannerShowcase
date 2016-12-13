@@ -24,7 +24,8 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns>Returns list of teams.</returns>
         public IEnumerable<Team> GetTeams()
         {
-            return db.Teams.Include("Employees").ToList();
+            return db.Teams
+                .Include("Employees").ToList();
         }
 
         /// <summary>

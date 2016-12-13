@@ -7,7 +7,32 @@
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
-                   sfsdfsds
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">
+                                    Projects
+                                </th>
+
+                                <th *ngFor="let date of teamService.mondaysOfMonth">
+                                    {{ date | date:'shortDate' }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let project of employee.projects">
+                                <td>{{ project.prjectName }}</td>
+                                <td *ngFor="let date of teamService.mondaysOfMonth;let i=index;">
+                                    <input [(ngModel)]="employee.projectActivities[i].work" value="getWork(project.id, i)">
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>

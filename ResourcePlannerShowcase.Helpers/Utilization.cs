@@ -10,8 +10,9 @@ namespace ResourcePlannerShowcase.Helpers
     {
         public int GetNumberOfWeeks(int month, int year)
         {
-            var days = DateTime.DaysInMonth(year, month);
             int numberOfWeeks = 0;
+            var days = DateTime.DaysInMonth(year, month);
+
             for (int i = 1; i <= days; i++)
             {
                 var day = new DateTime(year, month, i).DayOfWeek;
@@ -20,6 +21,23 @@ namespace ResourcePlannerShowcase.Helpers
             }
 
             return numberOfWeeks;
+        }
+
+        public IEnumerable<DateTime> GetMondaysInMonth(int month, int year)
+        {
+            List<DateTime> mondays = new List<DateTime>();
+            var days = DateTime.DaysInMonth(year, month);
+
+            for (int i = 1; i <= days; i++)
+            {
+                var day = new DateTime(year, month, i);
+                if (day.DayOfWeek == DayOfWeek.Monday)
+                    mondays.Add(day);
+            }
+
+
+            return mondays;
+
         }
 
     }

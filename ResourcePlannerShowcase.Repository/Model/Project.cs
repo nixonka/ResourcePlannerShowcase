@@ -17,16 +17,16 @@ namespace ResourcePlannerShowcase.Repository.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
         {
-            this.ProjectActivities = new HashSet<ProjectActivity>();
             this.Employees = new HashSet<Employee>();
+            this.ProjectActivities = new HashSet<ProjectActivity>();
         }
     
         public System.Guid Id { get; set; }
         public string PrjectName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectActivity> ProjectActivities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectActivity> ProjectActivities { get; set; }
     }
 }

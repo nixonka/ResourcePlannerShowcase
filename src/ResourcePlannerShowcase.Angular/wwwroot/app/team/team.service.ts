@@ -3,6 +3,8 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
+import * as _ from "lodash";
+
 import { } from '../common/models/rps.interfaces';
 import { Team, Employee, MonthlyUtilization, EmployeeAvailabilities, ProjectActivities } from '../common/models/rps.classes';
 import { GlobalService } from '../common/services/global.service';
@@ -13,12 +15,14 @@ export class TeamService implements OnInit {
     teams: Team[];
     employees: Employee[];
     options: any[];
-    weeks: number[];
+    weeksPerMonth: number[];
+    mondaysOfMonth: Date[];
 
     constructor(private http: Http, private gs: GlobalService) {
         this.teams = [];
         this.options = [];
-        this.weeks = [];
+        this.weeksPerMonth = [];
+        this.mondaysOfMonth = [];
 
         this.getWeeks(2016);
     }
@@ -52,8 +56,16 @@ export class TeamService implements OnInit {
                 .map((response: Response) => <number>response.json())
                 .do(data => console.log("All: " + JSON.stringify(data)))
                 .catch(this.handleError)
-                .subscribe(weeks => this.weeks.push(weeks));
+                .subscribe(weeks => this.weeksPerMonth.push(weeks));
         }
+    }
+
+    getMondays(year: number, month: number): void {
+        this.http.get((this.gs.getApiUrl('data', 'mondays') + `?month=${month}&year=${year}`))
+            .map((response: Response) => <Date[]>response.json())
+            .do(data => console.log("All: " + JSON.stringify(data)))
+            .catch(this.handleError)
+            .subscribe(mondays => this.mondaysOfMonth = mondays);
     }
 
     handleError(error: Response) {
@@ -72,7 +84,7 @@ export class TeamService implements OnInit {
                 utilization.utilization = this.calculateUtilitizationForEmployee(
                     emplooyee.employeeAvailabilities,
                     emplooyee.projectActivities,
-                    this.weeks[i],
+                    this.weeksPerMonth[i],
                     i
                 );
 
@@ -120,7 +132,7 @@ export class TeamService implements OnInit {
         let weeks = 1;
         for (var i = 1; i <= 12; i++) {
             if (i < month) {
-                weeks += this.weeks[i];
+                weeks += this.weeksPerMonth[i];
             }
         }
         return weeks;

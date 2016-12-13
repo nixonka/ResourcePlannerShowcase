@@ -27,10 +27,9 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
-            'lodash': 'node_modules/lodash/index.js',
+            'lodash': 'node_modules/lodash',
             'moment': 'node_modules/moment/moment.js',
-            'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
-            'angular2-select': 'node_modules/angular2-select'
+            'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -41,7 +40,8 @@
             rxjs: {
                 defaultExtension: 'js'
             },
-            'angular2-select': { main: 'index.js', defaultExtension: 'js' }
+            'lodash': { main: 'index.js', defaultExtension: 'js' },
+
         }
     });
 })(this);

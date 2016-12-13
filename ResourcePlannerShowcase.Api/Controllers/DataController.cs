@@ -4,6 +4,7 @@ using ResourcePlannerShowcase.Repository;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using ResourcePlannerShowcase.Helpers;
+using System;
 
 namespace ResourcePlannerShowcase.Api.Controllers
 {
@@ -35,6 +36,15 @@ namespace ResourcePlannerShowcase.Api.Controllers
             Utilization util = new Utilization();
 
             return util.GetNumberOfWeeks(month, year);
+        }
+
+        [HttpGet]
+        [Route("api/data/mondays")]
+        public IEnumerable<DateTime> GetMondays([FromUri]int month, [FromUri]int year)
+        {
+            Utilization util = new Utilization();
+
+            return util.GetMondaysInMonth(month, year);
         }
     }
 }

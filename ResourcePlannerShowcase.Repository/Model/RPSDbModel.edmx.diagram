@@ -8,13 +8,13 @@
         <EntityTypeShape EntityType="rpsModel.Employee" Width="1.5" PointX="0.75" PointY="5.25" />
         <EntityTypeShape EntityType="rpsModel.Project" Width="1.5" PointX="3" PointY="11" />
         <EntityTypeShape EntityType="rpsModel.Team" Width="1.5" PointX="3" PointY="2.75" />
-        <EntityTypeShape EntityType="rpsModel.EmployeeAvailability" Width="1.5" PointX="3" PointY="8" />
-        <EntityTypeShape EntityType="rpsModel.ProjectActivity" Width="1.5" PointX="5.25" PointY="7.875" />
-        <AssociationConnector Association="rpsModel.FK_EmployeeAvailability_Employees" />
-        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Employees" />
-        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Projects" />
         <AssociationConnector Association="rpsModel.EmployeeProjects" />
         <AssociationConnector Association="rpsModel.TeamMembers" />
+        <EntityTypeShape EntityType="rpsModel.ProjectActivity" Width="1.5" PointX="5.25" PointY="7.875" />
+        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Employees" />
+        <AssociationConnector Association="rpsModel.FK_ProjectActivities_Projects" />
+        <EntityTypeShape EntityType="rpsModel.EmployeeAvailability" Width="1.5" PointX="3" PointY="5.25" />
+        <AssociationConnector Association="rpsModel.FK_EmployeeAvailability_Employees" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

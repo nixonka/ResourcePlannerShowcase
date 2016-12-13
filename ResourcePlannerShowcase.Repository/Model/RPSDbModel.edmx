@@ -5,8 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="rpsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EmployeeAvailability">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -33,8 +31,6 @@ warning 6002: The table/view 'rps.dbo.EmployeeAvailability' does not have a prim
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProjectActivities">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -153,28 +149,13 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="rpsModelStoreContainer">
+          <EntitySet Name="EmployeeAvailability" EntityType="Self.EmployeeAvailability" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeProjects" EntityType="Self.EmployeeProjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectActivities" EntityType="Self.ProjectActivities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamMembers" EntityType="Self.TeamMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmployeeAvailability" EntityType="Self.EmployeeAvailability" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [EmployeeAvailability].[EmployeeId] AS [EmployeeId], 
-    [EmployeeAvailability].[Week] AS [Week], 
-    [EmployeeAvailability].[Available] AS [Available], 
-    [EmployeeAvailability].[Worked] AS [Worked], 
-    [EmployeeAvailability].[WeekUtilization] AS [WeekUtilization]
-    FROM [dbo].[EmployeeAvailability] AS [EmployeeAvailability]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ProjectActivities" EntityType="Self.ProjectActivities" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ProjectActivities].[ProjectId] AS [ProjectId], 
-    [ProjectActivities].[EmployeeId] AS [EmployeeId], 
-    [ProjectActivities].[Week] AS [Week], 
-    [ProjectActivities].[Work] AS [Work]
-    FROM [dbo].[ProjectActivities] AS [ProjectActivities]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="Self.FK_EmployeeAvailability_Employees">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="EmployeeAvailability" EntitySet="EmployeeAvailability" />
@@ -212,20 +193,6 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           <EntitySet Name="Employees" EntityType="rpsModel.Employee" />
           <EntitySet Name="Projects" EntityType="rpsModel.Project" />
           <EntitySet Name="Teams" EntityType="rpsModel.Team" />
-          <EntitySet Name="EmployeeAvailabilities" EntityType="rpsModel.EmployeeAvailability" />
-          <EntitySet Name="ProjectActivities" EntityType="rpsModel.ProjectActivity" />
-          <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="rpsModel.FK_EmployeeAvailability_Employees">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeAvailability" EntitySet="EmployeeAvailabilities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectActivities_Employees" Association="rpsModel.FK_ProjectActivities_Employees">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectActivities_Projects" Association="rpsModel.FK_ProjectActivities_Projects">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
-          </AssociationSet>
           <AssociationSet Name="EmployeeProjects" Association="rpsModel.EmployeeProjects">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Project" EntitySet="Projects" />
@@ -234,6 +201,20 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Team" EntitySet="Teams" />
           </AssociationSet>
+          <EntitySet Name="ProjectActivities" EntityType="rpsModel.ProjectActivity" />
+          <AssociationSet Name="FK_ProjectActivities_Employees" Association="rpsModel.FK_ProjectActivities_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectActivities_Projects" Association="rpsModel.FK_ProjectActivities_Projects">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectActivity" EntitySet="ProjectActivities" />
+          </AssociationSet>
+          <EntitySet Name="EmployeeAvailabilities" EntityType="rpsModel.EmployeeAvailability" />
+          <AssociationSet Name="FK_EmployeeAvailability_Employees" Association="rpsModel.FK_EmployeeAvailability_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeAvailability" EntitySet="EmployeeAvailabilities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Employee">
           <Key>
@@ -241,10 +222,10 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="EmployeeAvailabilities" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="Employee" ToRole="EmployeeAvailability" />
-          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="Employee" ToRole="ProjectActivity" />
           <NavigationProperty Name="Projects" Relationship="rpsModel.EmployeeProjects" FromRole="Employee" ToRole="Project" />
           <NavigationProperty Name="Teams" Relationship="rpsModel.TeamMembers" FromRole="Employee" ToRole="Team" />
+          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="Employee" ToRole="ProjectActivity" />
+          <NavigationProperty Name="EmployeeAvailabilities" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="Employee" ToRole="EmployeeAvailability" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -252,8 +233,8 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="PrjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="Project" ToRole="ProjectActivity" />
           <NavigationProperty Name="Employees" Relationship="rpsModel.EmployeeProjects" FromRole="Project" ToRole="Employee" />
+          <NavigationProperty Name="ProjectActivities" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="Project" ToRole="ProjectActivity" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -263,18 +244,14 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employees" Relationship="rpsModel.TeamMembers" FromRole="Team" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="EmployeeAvailability">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-            <PropertyRef Name="Week" />
-          </Key>
-          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
-          <Property Name="Week" Type="Int32" Nullable="false" />
-          <Property Name="Available" Type="Int32" />
-          <Property Name="Worked" Type="Int32" />
-          <Property Name="WeekUtilization" Type="Decimal" Precision="4" Scale="1" />
-          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="EmployeeAvailability" ToRole="Employee" />
-        </EntityType>
+        <Association Name="EmployeeProjects">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="rpsModel.Project" Role="Project" Multiplicity="*" />
+        </Association>
+        <Association Name="TeamMembers">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="rpsModel.Team" Role="Team" Multiplicity="*" />
+        </Association>
         <EntityType Name="ProjectActivity">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -288,18 +265,6 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
           <NavigationProperty Name="Employee" Relationship="rpsModel.FK_ProjectActivities_Employees" FromRole="ProjectActivity" ToRole="Employee" />
           <NavigationProperty Name="Project" Relationship="rpsModel.FK_ProjectActivities_Projects" FromRole="ProjectActivity" ToRole="Project" />
         </EntityType>
-        <Association Name="FK_EmployeeAvailability_Employees">
-          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="rpsModel.EmployeeAvailability" Role="EmployeeAvailability" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EmployeeAvailability">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProjectActivities_Employees">
           <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="rpsModel.ProjectActivity" Role="ProjectActivity" Multiplicity="*" />
@@ -324,13 +289,29 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="EmployeeProjects">
-          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
-          <End Type="rpsModel.Project" Role="Project" Multiplicity="*" />
-        </Association>
-        <Association Name="TeamMembers">
-          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="*" />
-          <End Type="rpsModel.Team" Role="Team" Multiplicity="*" />
+        <EntityType Name="EmployeeAvailability">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="Week" />
+          </Key>
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="Available" Type="Int32" />
+          <Property Name="Worked" Type="Int32" />
+          <Property Name="WeekUtilization" Type="Decimal" Precision="4" Scale="1" />
+          <NavigationProperty Name="Employee" Relationship="rpsModel.FK_EmployeeAvailability_Employees" FromRole="EmployeeAvailability" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_EmployeeAvailability_Employees">
+          <End Type="rpsModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="rpsModel.EmployeeAvailability" Role="EmployeeAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeAvailability">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -362,27 +343,6 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmployeeAvailabilities">
-            <EntityTypeMapping TypeName="rpsModel.EmployeeAvailability">
-              <MappingFragment StoreEntitySet="EmployeeAvailability">
-                <ScalarProperty Name="WeekUtilization" ColumnName="WeekUtilization" />
-                <ScalarProperty Name="Worked" ColumnName="Worked" />
-                <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProjectActivities">
-            <EntityTypeMapping TypeName="rpsModel.ProjectActivity">
-              <MappingFragment StoreEntitySet="ProjectActivities">
-                <ScalarProperty Name="Work" ColumnName="Work" />
-                <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="EmployeeProjects" TypeName="rpsModel.EmployeeProjects" StoreEntitySet="EmployeeProjects">
             <EndProperty Name="Project">
               <ScalarProperty Name="Id" ColumnName="ProjectId" />
@@ -399,6 +359,27 @@ warning 6002: The table/view 'rps.dbo.ProjectActivities' does not have a primary
               <ScalarProperty Name="Id" ColumnName="EmployeeId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ProjectActivities">
+            <EntityTypeMapping TypeName="rpsModel.ProjectActivity">
+              <MappingFragment StoreEntitySet="ProjectActivities">
+                <ScalarProperty Name="Work" ColumnName="Work" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeAvailabilities">
+            <EntityTypeMapping TypeName="rpsModel.EmployeeAvailability">
+              <MappingFragment StoreEntitySet="EmployeeAvailability">
+                <ScalarProperty Name="WeekUtilization" ColumnName="WeekUtilization" />
+                <ScalarProperty Name="Worked" ColumnName="Worked" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

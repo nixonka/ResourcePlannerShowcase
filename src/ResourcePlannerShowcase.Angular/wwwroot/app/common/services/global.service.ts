@@ -4,29 +4,29 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { } from '../models/rps.interfaces';
-import { Team } from '../models/rps.classes';
+import { } from '../models/rps.classes';
 
 @Injectable()
 export class GlobalService {
 
     private _baseApiUrl = "http://localhost:64661";
-    teams: Team[];
+    //teams: Team[];
 
     constructor(private http: Http) {
-        this.teams = [];
+        //this.teams = [];
     }
 
     getApiUrl(controller: string, method: string): string {
         return `${this._baseApiUrl}/api/${controller}/${method}`;
     }
 
-    getTeams(): void {
-        this.http.get(this.getApiUrl('data', 'getteams'))
-            .map((response: Response) => <Team[]>response.json())
-            .do(data => console.log("All: " + JSON.stringify(data)))
-            .catch(this.handleError)
-            .subscribe(teams => this.teams = teams);
-    }
+    //getTeams(): void {
+    //    this.http.get(this.getApiUrl('data', 'getteams'))
+    //        .map((response: Response) => <Team[]>response.json())
+    //        .do(data => console.log("All: " + JSON.stringify(data)))
+    //        .catch(this.handleError)
+    //        .subscribe(teams => this.teams = teams);
+    //}
 
 
     handleError(error: Response) {

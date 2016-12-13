@@ -11,22 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var team_service_1 = require('./team.service');
 var global_service_1 = require('../common/services/global.service');
-var modal_anchor_service_1 = require('../common/directives/modal-anchor/modal-anchor.service');
-var modal_component_1 = require('../common/components/modal/modal.component');
 var TeamComponent = (function () {
-    function TeamComponent(ts, gs, modalAnchorService) {
+    function TeamComponent(ts, gs) {
         this.ts = ts;
         this.gs = gs;
-        this.modalAnchorService = modalAnchorService;
-        this.options = [];
-        //hard coded filter values
-        this.options.push({ value: 1, label: 'Burscher' });
-        this.options.push({ value: 2, label: 'Faustner' });
-        this.options.push({ value: 3, label: 'Alicic' });
-        this.options.push({ value: 4, label: 'Absenger' });
-        this.options.push({ value: 5, label: 'Lang' });
-        this.options.push({ value: 6, label: 'Konrad' });
-        this.options.push({ value: 7, label: 'Krenn' });
+        this.showModal = false;
     }
     TeamComponent.prototype.ngOnInit = function () {
         this.ts.getTeams();
@@ -42,8 +31,14 @@ var TeamComponent = (function () {
         var t = this.ts.teams;
         var e = this.ts.employees;
     };
-    TeamComponent.prototype.openModal = function () {
-        this.modalAnchorService.modalAnchor.createModal(modal_component_1.ModalComponent);
+    TeamComponent.prototype.openModal = function (month, employeeId) {
+        this.selectedEmployee = employeeId;
+        this.selectedMonth = month;
+        this.ts.getMondays(2016, month);
+        this.showModal = true;
+    };
+    TeamComponent.prototype.onClose = function (close) {
+        this.showModal = close;
     };
     TeamComponent = __decorate([
         core_1.Component({
@@ -51,7 +46,7 @@ var TeamComponent = (function () {
             templateUrl: 'app/team/team.component.html',
             providers: [team_service_1.TeamService]
         }), 
-        __metadata('design:paramtypes', [team_service_1.TeamService, global_service_1.GlobalService, modal_anchor_service_1.ModalAnchorService])
+        __metadata('design:paramtypes', [team_service_1.TeamService, global_service_1.GlobalService])
     ], TeamComponent);
     return TeamComponent;
 }());

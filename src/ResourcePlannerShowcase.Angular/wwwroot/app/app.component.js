@@ -18,7 +18,6 @@ var AppComponent = (function () {
         this.gs = gs;
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.gs.getTeams();
     };
     AppComponent = __decorate([
         core_1.Component({

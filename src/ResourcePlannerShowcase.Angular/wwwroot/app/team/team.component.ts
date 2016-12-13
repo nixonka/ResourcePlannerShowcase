@@ -1,13 +1,17 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
+import * as _ from "lodash"; //Lodash makes JavaScript easier by taking the hassle out of working with arrays, numbers, objects, strings, etc.
+
+
 import {  } from '../common/models/rps.interfaces';
 import { Team, Employee } from '../common/models/rps.classes';
 
 
 import { TeamService } from './team.service';
 import { GlobalService } from '../common/services/global.service';
-import { ModalAnchorService } from '../common/directives/modal-anchor/modal-anchor.service';
 import { ModalComponent } from '../common/components/modal/modal.component';
+
+
 
 @Component({
     selector: 'team',
@@ -15,19 +19,12 @@ import { ModalComponent } from '../common/components/modal/modal.component';
     providers: [TeamService]
 })
 export class TeamComponent implements OnInit {
+    showModal: boolean = false;
+    selectedMonth: number;
+    selectedEmployee: string;
 
-    options: any[] = [];
+    constructor(private ts: TeamService, private gs: GlobalService) {
 
-    constructor(private ts: TeamService, private gs: GlobalService,
-        private modalAnchorService: ModalAnchorService) {
-        //hard coded filter values
-        this.options.push({ value: 1, label: 'Burscher' });
-        this.options.push({ value: 2, label: 'Faustner' });
-        this.options.push({ value: 3, label: 'Alicic' });
-        this.options.push({ value: 4, label: 'Absenger' });
-        this.options.push({ value: 5, label: 'Lang' });
-        this.options.push({ value: 6, label: 'Konrad' });
-        this.options.push({ value: 7, label: 'Krenn' });
     }
 
     ngOnInit(): void {
@@ -47,8 +44,16 @@ export class TeamComponent implements OnInit {
         var e = this.ts.employees; 
     }
 
-    openModal() {
-        this.modalAnchorService.modalAnchor.createModal(ModalComponent);
+    openModal(month: number, employeeId: string) {
+        this.selectedEmployee = employeeId;
+        this.selectedMonth = month;
+        this.ts.getMondays(2016, month);
+
+        this.showModal = true;
+    }
+
+    onClose(close: boolean) {
+        this.showModal = close;
     }
 }
 

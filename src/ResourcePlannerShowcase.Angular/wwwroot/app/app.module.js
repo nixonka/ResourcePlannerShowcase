@@ -14,7 +14,6 @@ var http_1 = require('@angular/http');
 var common_1 = require('@angular/common');
 var forms_1 = require('@angular/forms');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
-var angular2_select_1 = require('angular2-select');
 var app_component_1 = require('./app.component');
 var global_service_1 = require('./common/services/global.service');
 var layout_component_1 = require('./common/components/layout/layout.component');
@@ -38,7 +37,6 @@ var AppModule = (function () {
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
                 ng2_bootstrap_1.Ng2BootstrapModule,
-                angular2_select_1.SelectModule
             ],
             providers: [global_service_1.GlobalService, layout_service_1.LayoutService, modal_anchor_service_1.ModalAnchorService],
             declarations: [

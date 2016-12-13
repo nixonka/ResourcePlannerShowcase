@@ -13,22 +13,22 @@ require('rxjs/Rx');
 var Observable_1 = require('rxjs/Observable');
 var http_1 = require('@angular/http');
 var GlobalService = (function () {
+    //teams: Team[];
     function GlobalService(http) {
         this.http = http;
         this._baseApiUrl = "http://localhost:64661";
-        this.teams = [];
+        //this.teams = [];
     }
     GlobalService.prototype.getApiUrl = function (controller, method) {
         return this._baseApiUrl + "/api/" + controller + "/" + method;
     };
-    GlobalService.prototype.getTeams = function () {
-        var _this = this;
-        this.http.get(this.getApiUrl('data', 'getteams'))
-            .map(function (response) { return response.json(); })
-            .do(function (data) { return console.log("All: " + JSON.stringify(data)); })
-            .catch(this.handleError)
-            .subscribe(function (teams) { return _this.teams = teams; });
-    };
+    //getTeams(): void {
+    //    this.http.get(this.getApiUrl('data', 'getteams'))
+    //        .map((response: Response) => <Team[]>response.json())
+    //        .do(data => console.log("All: " + JSON.stringify(data)))
+    //        .catch(this.handleError)
+    //        .subscribe(teams => this.teams = teams);
+    //}
     GlobalService.prototype.handleError = function (error) {
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || 'Server error');

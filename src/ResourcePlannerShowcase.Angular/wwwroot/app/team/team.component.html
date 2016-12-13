@@ -1,12 +1,4 @@
-﻿<ng-select [options]="options"
-                multiple="true"
-                placeholder="Select a team"
-                [allowClear]="true"
-                theme="default"
-                (selected)="onSelected($event)"
-                (deselected)="onDeselected($event)">>
-</ng-select>
-
+﻿
 <table class="table table-striped">
     <thead>
         <tr>
@@ -54,7 +46,10 @@
     <tbody>
         <tr *ngFor="let item of ts.employees">
             <td>{{item.name}}</td>
-            <td *ngFor="let month of item.monthlyUtilization" (click)='openModal()'>{{ month.utilization | percent:'.2' }}</td>
+            <td *ngFor="let month of item.monthlyUtilization"
+                (click)='openModal(month.month, item.id)'>
+                {{ month.utilization | percent:'.2' }}
+            </td>
         </tr>
     </tbody>
     <tfoot>
@@ -63,5 +58,11 @@
         </tr>
     </tfoot>
 </table>
+
+<modal *ngIf="showModal" (onClose)="onClose($event)"
+       [teamService]="ts"
+       [selectedMonth]="selectedMonth"
+       [selectedEmployee]="selectedEmployee">
+</modal>
 
 <button (click)="test()"></button>

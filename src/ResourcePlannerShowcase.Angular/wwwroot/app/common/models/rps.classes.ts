@@ -2,15 +2,20 @@
 import { ContentModelStatus } from './Enums'
 
 export class Projects {
+    id: string;
+    prjectName: string;
 
+    constructor() {
+
+    }
 }
 
 export class Team {
     id: string;
     name: string;
-    //employees: IEmployee[];
+
     constructor() {
-        //this.employees = [];
+
     }
 }
 
@@ -20,6 +25,8 @@ export class Employee implements IEmployee {
     monthlyUtilization: MonthlyUtilization[];
     projectActivities: ProjectActivities[];
     employeeAvailabilities: EmployeeAvailabilities[];
+    teams: Team[];
+    projects: Projects[];
 
     constructor() {
         this.monthlyUtilization = [];
@@ -32,6 +39,8 @@ export class MonthlyUtilization implements IMonthlyUtilization {
 }
 
 export class ProjectActivities {
+    projectId: string;
+    employeeId: string;
     week: number;
     work: number;
 }

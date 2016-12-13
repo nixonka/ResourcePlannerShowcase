@@ -6,9 +6,7 @@ var Projects = (function () {
 }());
 exports.Projects = Projects;
 var Team = (function () {
-    //employees: IEmployee[];
     function Team() {
-        //this.employees = [];
     }
     return Team;
 }());

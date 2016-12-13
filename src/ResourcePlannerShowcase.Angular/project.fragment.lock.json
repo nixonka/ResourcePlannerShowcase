@@ -5,15 +5,15 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.5.2",
       "compile": {
-        "bin/Debug/ResourcePlannerShowcase.Repository.dll": {}
+        "bin/Release/ResourcePlannerShowcase.Repository.dll": {}
       },
       "runtime": {
         "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
         "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
-        "bin/Debug/ResourcePlannerShowcase.Repository.dll": {}
+        "bin/Release/ResourcePlannerShowcase.Repository.dll": {}
       },
       "contentFiles": {
-        "bin/Debug/ResourcePlannerShowcase.Repository.pdb": {
+        "bin/Release/ResourcePlannerShowcase.Repository.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true
