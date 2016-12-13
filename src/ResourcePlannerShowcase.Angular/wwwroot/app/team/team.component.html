@@ -1,4 +1,12 @@
-﻿
+﻿<div>
+    <label>Filter by team </label>
+    <select [(ngModel)]="selectedTeam">
+        <!--<option *ngFor="let team of ts.teams">{{ team.name }}</option>-->
+        <option *ngFor="let team of ts.teams" [ngValue]="team.id">{{ team.name }}</option>
+    </select>
+</div>
+
+
 <table class="table table-striped">
     <thead>
         <tr>

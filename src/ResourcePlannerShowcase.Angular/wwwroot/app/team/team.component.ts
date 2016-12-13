@@ -22,6 +22,7 @@ export class TeamComponent implements OnInit {
     showModal: boolean = false;
     selectedMonth: number;
     selectedEmployee: string;
+    selectedTeam: string = "";
 
     constructor(private ts: TeamService, private gs: GlobalService) {
 
@@ -42,6 +43,7 @@ export class TeamComponent implements OnInit {
     test() {
         var t = this.ts.teams;
         var e = this.ts.employees; 
+        var st = this.selectedTeam;
     }
 
     openModal(month: number, employeeId: string) {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ResourcePlannerShowcase.Repository.Model;
+using System.Data.Entity;
 
 namespace ResourcePlannerShowcase.Repository
 {
@@ -24,8 +25,7 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns>Returns list of teams.</returns>
         public IEnumerable<Team> GetTeams()
         {
-            return db.Teams
-                .Include("Employees").ToList();
+            return db.Teams.ToList();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace ResourcePlannerShowcase.Repository
         /// <returns></returns>
         public Team GetTeamByID(Guid teamId)
         {
-            if(teamId == null)
+            if (teamId == null)
                 throw new ArgumentNullException("TeamID cannot be null.");
 
             return db.Teams.Where(t => t.Id == teamId).FirstOrDefault();
@@ -43,22 +43,39 @@ namespace ResourcePlannerShowcase.Repository
 
         public void DeleteTeam(Guid teamId)
         {
-            throw new NotImplementedException();
+            db.Teams.Remove(db.Teams.Find(teamId));
+            Save();
+
         }
 
         public void InserTeam(Team team)
         {
-            throw new NotImplementedException();
+            if (team == null)
+                throw new ArgumentNullException("Team cannot be null.");
+
+            db.Teams.Add(team);
+            Save();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         public void UpdateTeam(Team team)
         {
-            throw new NotImplementedException();
+            if (team == null)
+                throw new ArgumentNullException("Team cannot be null.");
+
+            db.Entry(team).State = EntityState.Modified;
+            Save();
         }
     }
 }

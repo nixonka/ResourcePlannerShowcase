@@ -16,6 +16,7 @@ var TeamComponent = (function () {
         this.ts = ts;
         this.gs = gs;
         this.showModal = false;
+        this.selectedTeam = "";
     }
     TeamComponent.prototype.ngOnInit = function () {
         this.ts.getTeams();
@@ -30,6 +31,7 @@ var TeamComponent = (function () {
     TeamComponent.prototype.test = function () {
         var t = this.ts.teams;
         var e = this.ts.employees;
+        var st = this.selectedTeam;
     };
     TeamComponent.prototype.openModal = function (month, employeeId) {
         this.selectedEmployee = employeeId;

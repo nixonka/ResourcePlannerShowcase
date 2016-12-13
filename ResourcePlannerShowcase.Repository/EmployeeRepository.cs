@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ResourcePlannerShowcase.Repository.Model;
+using System.Data.Entity;
 
 namespace ResourcePlannerShowcase.Repository
 {
@@ -39,17 +40,25 @@ namespace ResourcePlannerShowcase.Repository
 
         public void DeleteEmployee(Guid employeeId)
         {
-            throw new NotImplementedException();
+            db.Employees.Remove(db.Employees.Find(employeeId));
+            Save();
         }
 
-        public Employee GetEmployeeByID(Guid EmployeeId)
+        public Employee GetEmployeeByID(Guid employeeId)
         {
-            throw new NotImplementedException();
+            if (employeeId == null)
+                throw new ArgumentNullException("EmployeeId cannot be null.");
+
+            return db.Employees.Find(employeeId);
         }
 
         public void InsertEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            if (employee == null)
+                throw new ArgumentNullException("employee cannot be null.");
+
+            db.Employees.Add(employee);
+            Save();
         }
 
         public void Save()
@@ -62,34 +71,16 @@ namespace ResourcePlannerShowcase.Repository
             {
                 throw;
             }
-
         }
 
         public void UpdateEmployee(Employee employee)
         {
-            throw new NotImplementedException();
-        }
+            if (employee == null)
+                throw new ArgumentNullException("employee cannot be null.");
 
-        public void InsertProjectActivities()
-        {
-            foreach (var item in db.Employees.ToList())
-            {
-                if (item.Id == Guid.Parse("6c840776-3bc2-4c2c-8ba1-08cf4364ad93"))
-                {
-                    foreach (var project in db.Projects.ToList())
-                    {
-                        for (int i = 1; i <= 10; i++)
-                        {
-                            item.ProjectActivities.Add(new ProjectActivity() { EmployeeId = item.Id, ProjectId = project.Id, Week = i, Work = 0 });
-                        }
-                    }
-                    for (int i = 1; i <= 10; i++)
-                    {
-                        item.EmployeeAvailabilities.Add(new EmployeeAvailability() { EmployeeId = item.Id, Available = 5, Week = i });
-                    }
-                }
-            }
+            db.Entry(employee).State = EntityState.Modified;
             Save();
         }
+
     }
 }
